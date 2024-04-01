@@ -61,6 +61,10 @@
             col_Value = new DataGridViewTextBoxColumn();
             col_Unit = new DataGridViewTextBoxColumn();
             col_IsValid = new DataGridViewTextBoxColumn();
+            bSave = new Button();
+            bLoad = new Button();
+            bPreview = new Button();
+            bExport = new Button();
             cgr_BasicInfo.SuspendLayout();
             cGrCustomer.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -394,11 +398,55 @@
             col_IsValid.Name = "col_IsValid";
             col_IsValid.ReadOnly = true;
             // 
+            // bSave
+            // 
+            bSave.Location = new Point(12, 663);
+            bSave.Name = "bSave";
+            bSave.Size = new Size(75, 23);
+            bSave.TabIndex = 10;
+            bSave.Text = "Uložit";
+            bSave.UseVisualStyleBackColor = true;
+            bSave.Click += bSave_Click;
+            // 
+            // bLoad
+            // 
+            bLoad.Location = new Point(92, 663);
+            bLoad.Name = "bLoad";
+            bLoad.Size = new Size(75, 23);
+            bLoad.TabIndex = 11;
+            bLoad.Text = "Načíst";
+            bLoad.UseVisualStyleBackColor = true;
+            bLoad.Click += bLoad_Click;
+            // 
+            // bPreview
+            // 
+            bPreview.Location = new Point(454, 661);
+            bPreview.Name = "bPreview";
+            bPreview.Size = new Size(75, 23);
+            bPreview.TabIndex = 12;
+            bPreview.Text = "Náhled";
+            bPreview.UseVisualStyleBackColor = true;
+            bPreview.Click += bPreview_Click;
+            // 
+            // bExport
+            // 
+            bExport.Location = new Point(535, 661);
+            bExport.Name = "bExport";
+            bExport.Size = new Size(75, 23);
+            bExport.TabIndex = 13;
+            bExport.Text = "Export";
+            bExport.UseVisualStyleBackColor = true;
+            bExport.Click += bExport_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(628, 696);
+            Controls.Add(bExport);
+            Controls.Add(bPreview);
+            Controls.Add(bLoad);
+            Controls.Add(bSave);
             Controls.Add(cGrMeasurrement);
             Controls.Add(groupBox1);
             Controls.Add(cGrCustomer);
@@ -452,5 +500,9 @@
         private DataGridViewTextBoxColumn col_Value;
         private DataGridViewTextBoxColumn col_Unit;
         private DataGridViewTextBoxColumn col_IsValid;
+        private Button bSave;
+        private Button bLoad;
+        private Button bPreview;
+        private Button bExport;
     }
 }

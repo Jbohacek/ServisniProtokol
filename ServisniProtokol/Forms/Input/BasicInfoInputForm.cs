@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ServisniProtokol.Managers.SaveItemsData;
 using ServisniProtokol.Managers.Validations;
 
 namespace ServisniProtokol.Forms.Input
@@ -14,12 +15,12 @@ namespace ServisniProtokol.Forms.Input
     public partial class BasicInfoInputForm : Form
     {
         private readonly BasicInformationValidation _validation;
-
+        public BasicInfoData Data { get; set; }
 
         public BasicInfoInputForm()
         {
             InitializeComponent();
-            NumProtokol = "";
+            Data = new BasicInfoData();
             _validation = new BasicInformationValidation(ErrorSetter);
         }
 
@@ -40,8 +41,8 @@ namespace ServisniProtokol.Forms.Input
                 return;
             }
 
-            NumProtokol = tCisloProduktu.Text;
-            DateOfMeasurement = dDatum.Value;
+            Data.NumProtokol = tCisloProduktu.Text;
+            Data.DateOfMeasurement = dDatum.Value;
             IsValid = true;
 
             this.DialogResult = DialogResult.OK;
@@ -49,18 +50,25 @@ namespace ServisniProtokol.Forms.Input
             this.Close();
         }
 
-        public string NumProtokol { get; set; }
-        public DateTime DateOfMeasurement { get; set; }
-
         public bool IsValid = false;
 
         private void bCancel_Click(object sender, EventArgs e)
         {
-            tCisloProduktu.Text = NumProtokol;
-            dDatum.Value = DateOfMeasurement;
+            PopulateData();
 
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void BasicInfoInputForm_Shown(object sender, EventArgs e)
+        {
+            PopulateData();
+        }
+
+        private void PopulateData()
+        {
+            tCisloProduktu.Text = Data.NumProtokol;
+            dDatum.Value = Data.DateOfMeasurement;
         }
     }
 }

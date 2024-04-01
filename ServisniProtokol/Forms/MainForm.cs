@@ -1,6 +1,10 @@
 using System.ComponentModel;
+using System.Resources;
+using ServisniProtokol.Forms;
 using ServisniProtokol.Forms.Input;
 using ServisniProtokol.Items;
+using ServisniProtokol.Managers;
+using ServisniProtokol.Managers.SaveItemsData;
 
 namespace ServisniProtokol
 {
@@ -13,7 +17,7 @@ namespace ServisniProtokol
         private Customer? _customer = null;
         private Device? _device = null;
 
-        private readonly BindingList<ListItemMeasurement> _measurements = new BindingList<ListItemMeasurement>();
+        private BindingList<ListItemMeasurement> _measurements = new BindingList<ListItemMeasurement>();
 
         public MainForm()
         {
@@ -26,8 +30,7 @@ namespace ServisniProtokol
             _basicInfoInputForm.ShowDialog();
             if (_basicInfoInputForm.DialogResult == DialogResult.OK)
             {
-                lCisloProtokoluTEXT.Text = _basicInfoInputForm.NumProtokol;
-                lDatumMereniTEXT.Text = _basicInfoInputForm.DateOfMeasurement.ToShortDateString();
+                PopulateBasicInfoData();
             }
         }
 
@@ -38,10 +41,7 @@ namespace ServisniProtokol
             {
                 _customer = _customerInputForm.GetCustomer();
 
-                lNazevTEXT.Text = _customerInputForm.Nazev;
-                lAdesaTEXT.Text = _customerInputForm.adresa;
-                lPSCTEXT.Text = _customerInputForm.PSC;
-                lICText.Text = _customerInputForm.IC;
+                PopulateCustomerInfoData();
             }
         }
 
@@ -52,9 +52,7 @@ namespace ServisniProtokol
             {
                 _device = _deviceInputForm.GetDevice();
 
-                lVyrobceTEXT.Text = _deviceInputForm.Vyrobce;
-                lModelTEXT.Text = _deviceInputForm.Model;
-                lSerioveTEXT.Text = _deviceInputForm.SerioveCislo;
+                PopulateDeviceInfoData();
             }
         }
 
@@ -105,6 +103,96 @@ namespace ServisniProtokol
             {
                 _measurements.Remove(removeValue);
             }
+        }
+
+        private void bSave_Click(object sender, EventArgs e)
+        {
+            SaveItem itemToSave =
+                new SaveItem(_basicInfoInputForm.Data, _deviceInputForm.Data, _customerInputForm.Data, _measurements.ToArray());
+
+            SaveManager saver = new SaveManager(itemToSave);
+            saver.Save();
+        }
+
+        private void bLoad_Click(object sender, EventArgs e)
+        {
+            LoadManager loader = new LoadManager();
+            loader.Load();
+            loader.PopulateData(_basicInfoInputForm,
+                _customerInputForm,
+                _deviceInputForm,
+                _measurements);
+
+            _measurements.ResetBindings();
+
+            PopulateBasicInfoData();
+            PopulateCustomerInfoData();
+            PopulateDeviceInfoData();
+        }
+
+        private void PopulateBasicInfoData()
+        {
+            var data = _basicInfoInputForm.Data;
+            lCisloProtokoluTEXT.Text = data.NumProtokol;
+            lDatumMereniTEXT.Text = data.DateOfMeasurement.ToShortDateString();
+        }
+
+        private void PopulateCustomerInfoData()
+        {
+            var data = _customerInputForm.Data;
+            lNazevTEXT.Text = data.Nazev;
+            lAdesaTEXT.Text = data.adresa;
+            lPSCTEXT.Text = data.PSC;
+            lICText.Text = data.IC;
+        }
+
+        private void PopulateDeviceInfoData()
+        {
+            var data = _deviceInputForm.Data;
+
+            lVyrobceTEXT.Text = data.Vyrobce;
+            lModelTEXT.Text = data.Model;
+            lSerioveTEXT.Text = data.SerioveCislo;
+        }
+
+        private void bPreview_Click(object sender, EventArgs e)
+        {
+            PreviewItem previewItem = new PreviewItem(_basicInfoInputForm.Data, _deviceInputForm.Data,
+                _customerInputForm.Data, _measurements.ToArray());
+            PreviewForm previewForm = new PreviewForm(previewItem);
+            previewForm.ShowDialog();
+        }
+
+        private void bExport_Click(object sender, EventArgs e)
+        {
+            _customer = _customerInputForm.GetCustomer();
+            _device = _deviceInputForm.GetDevice();
+
+            ServisProtokol protokol = new ServisProtokol(
+                _basicInfoInputForm.Data.NumProtokol,
+                _basicInfoInputForm.Data.DateOfMeasurement,
+                _customer, 
+                _device,
+                _measurements.Select(x => x.GetMeasurement()).ToArray());
+
+            var result = protokol.ConvertToHtml();
+
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = @"html files (*.html)|*.html|All files (*.*)|*.*";
+            
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+            saveFileDialog1.AddExtension = true;
+            saveFileDialog1.DefaultExt = ".html";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllText(saveFileDialog1.FileName,result);
+                MessageBox.Show("Úspìšnì exportováno");
+            }
+
+
         }
     }
 }

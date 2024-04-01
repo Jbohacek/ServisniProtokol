@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ServisniProtokol.Items;
+using ServisniProtokol.Managers.SaveItemsData;
 using ServisniProtokol.Managers.Validations;
 
 namespace ServisniProtokol.Forms.Input
@@ -16,10 +17,7 @@ namespace ServisniProtokol.Forms.Input
     {
         private readonly DeviceInputValidation deviceInputValidation;
         public bool IsValid { get; set; } = false;
-
-        public string Vyrobce { get; set; } = "";
-        public string Model { get; set; } = "";
-        public string SerioveCislo { get; set; } = "";
+        public DeviceInfoData Data { get; set; } = new DeviceInfoData();
 
         public DeviceInputForm()
         {
@@ -34,9 +32,9 @@ namespace ServisniProtokol.Forms.Input
                 return;
             }
 
-            Model = tModel.Text;
-            Vyrobce = tVyrobce.Text;
-            SerioveCislo = tSerioveCislo.Text;
+            Data.Model = tModel.Text;
+            Data.Vyrobce = tVyrobce.Text;
+            Data.SerioveCislo = tSerioveCislo.Text;
 
             IsValid = true;
             this.DialogResult = DialogResult.OK;
@@ -48,9 +46,7 @@ namespace ServisniProtokol.Forms.Input
         {
             if (IsValid)
             {
-                tModel.Text = Model;
-                tVyrobce.Text = Vyrobce;
-                tSerioveCislo.Text = SerioveCislo;
+                PopulateData();
 
             }
 
@@ -61,9 +57,18 @@ namespace ServisniProtokol.Forms.Input
 
         public Device GetDevice()
         {
-            if (!IsValid) throw new Exception("Device Neni valid");
+            return Data.GetDevice();
+        }
 
-            return new Device(Vyrobce, Model, SerioveCislo);
+        private void DeviceInputForm_Shown(object sender, EventArgs e)
+        {
+            PopulateData();
+        }
+        private void PopulateData()
+        {
+            tModel.Text = Data.Model;
+            tVyrobce.Text = Data.Vyrobce;
+            tSerioveCislo.Text = Data.SerioveCislo;
         }
     }
 }

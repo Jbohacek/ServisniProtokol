@@ -22,12 +22,17 @@ namespace ServisniProtokol.Items
 
         public string ConvertToHtml()
         {
-            throw new NotImplementedException();
+            return "<div id='zarizeni'>\r\n" +
+                   "<h2>Zařízení</h2>\r\n" +
+                   $"<div>Výrobce: {Creator}</div>\r\n" +
+                   $"<div>Model: {DeviceModel}</div>\r\n" +
+                   $"<div>Sériové číslo: {SerialNumber}</div>\r\n" +
+                   "</div>";
         }
 
         public string DefineCssStyles()
         {
-            throw new NotImplementedException();
+            return "div#zarizeni { border:1px solid black; margin:1em; padding:1em; width:40%; float:right; }";
         }
     }
 }

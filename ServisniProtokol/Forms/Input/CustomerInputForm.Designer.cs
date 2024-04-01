@@ -84,35 +84,35 @@
             tIco.Location = new Point(78, 132);
             tIco.Name = "tIco";
             tIco.Size = new Size(263, 23);
-            tIco.TabIndex = 4;
+            tIco.TabIndex = 3;
             // 
             // tPSC
             // 
             tPSC.Location = new Point(78, 96);
             tPSC.Name = "tPSC";
             tPSC.Size = new Size(263, 23);
-            tPSC.TabIndex = 5;
+            tPSC.TabIndex = 2;
             // 
             // tAdresa
             // 
             tAdresa.Location = new Point(78, 56);
             tAdresa.Name = "tAdresa";
             tAdresa.Size = new Size(263, 23);
-            tAdresa.TabIndex = 6;
+            tAdresa.TabIndex = 1;
             // 
             // tNazev
             // 
             tNazev.Location = new Point(78, 22);
             tNazev.Name = "tNazev";
             tNazev.Size = new Size(263, 23);
-            tNazev.TabIndex = 7;
+            tNazev.TabIndex = 0;
             // 
             // bCancel
             // 
             bCancel.Location = new Point(266, 161);
             bCancel.Name = "bCancel";
             bCancel.Size = new Size(75, 23);
-            bCancel.TabIndex = 8;
+            bCancel.TabIndex = 5;
             bCancel.Text = "Cancel";
             bCancel.UseVisualStyleBackColor = true;
             bCancel.Click += bCancel_Click;
@@ -122,8 +122,8 @@
             bSubmit.Location = new Point(185, 161);
             bSubmit.Name = "bSubmit";
             bSubmit.Size = new Size(75, 23);
-            bSubmit.TabIndex = 9;
-            bSubmit.Text = "Submit";
+            bSubmit.TabIndex = 4;
+            bSubmit.Text = "Ok";
             bSubmit.UseVisualStyleBackColor = true;
             bSubmit.Click += bSubmit_Click;
             // 
@@ -148,6 +148,7 @@
             Controls.Add(lNazev);
             Name = "CustomerInputForm";
             Text = "Zákazník";
+            Shown += CustomerInputForm_Shown;
             ((System.ComponentModel.ISupportInitialize)SetError).EndInit();
             ResumeLayout(false);
             PerformLayout();

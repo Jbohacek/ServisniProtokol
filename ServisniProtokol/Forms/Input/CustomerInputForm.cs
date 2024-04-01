@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ServisniProtokol.Items;
+using ServisniProtokol.Managers.SaveItemsData;
 using ServisniProtokol.Managers.Validations;
 
 namespace ServisniProtokol.Forms.Input
@@ -16,21 +17,17 @@ namespace ServisniProtokol.Forms.Input
     {
         private readonly CustomerValidation customerValidation;
 
+        public CustomerInfoData Data { get; set; }
         public bool IsValid = true;
 
 
         public CustomerInputForm()
         {
             InitializeComponent();
+            Data = new CustomerInfoData();
             customerValidation = new CustomerValidation(SetError);
 
         }
-
-        public string Nazev = "";
-        public string adresa = "";
-        public string PSC = "";
-        public string IC = "";
-
 
 
         public Customer GetCustomer()
@@ -40,17 +37,14 @@ namespace ServisniProtokol.Forms.Input
                 throw new Exception("Customer neni valid");
             }
 
-            return new Customer(Nazev, adresa, PSC, IC);
+            return Data.GetCustomer();
         }
 
         private void bCancel_Click(object sender, EventArgs e)
         {
             if (IsValid)
             {
-                tNazev.Text = Nazev;
-                tAdresa.Text = adresa;
-                tPSC.Text = PSC;
-                tIco.Text = IC;
+                PopulateData();
             }
 
             SetError.Clear();
@@ -65,15 +59,28 @@ namespace ServisniProtokol.Forms.Input
                 return;
             }
 
-            Nazev = tNazev.Text;
-            adresa = tAdresa.Text;
-            PSC = tPSC.Text;
-            IC = tIco.Text;
+            Data.Nazev = tNazev.Text;
+            Data.adresa = tAdresa.Text;
+            Data.PSC = tPSC.Text;
+            Data.IC = tIco.Text;
 
             IsValid = true;
             this.DialogResult = DialogResult.OK;
 
             this.Close();
+        }
+
+        private void CustomerInputForm_Shown(object sender, EventArgs e)
+        {
+            PopulateData();
+        }
+
+        private void PopulateData()
+        {
+            tNazev.Text = Data.Nazev;
+            tAdresa.Text = Data.adresa;
+            tPSC.Text = Data.PSC;
+            tIco.Text = Data.IC;
         }
     }
 }

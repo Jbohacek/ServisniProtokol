@@ -28,12 +28,18 @@ namespace ServisniProtokol.Items
 
         public string ConvertToHtml()
         {
-            throw new NotImplementedException();
+            return
+                "<div id='zakaznik'>\r\n" +
+                "<h2>Zákazník</h2>\r\n" +
+                $"<div>Název: {Name}</div>\r\n" +
+                $"<div>Adresa: {Address}</div>\r\n" +
+                $"<div>PSČ: {Psc}</div>\r\n" +
+                $"<div>IČ: {Ic}</div>\r\n</div>";
         }
 
         public string DefineCssStyles()
         {
-            throw new NotImplementedException();
+            return "div#zakaznik { border:1px solid black; margin:1em; padding:1em; width:40%; float:left; }";
         }
     }
 }

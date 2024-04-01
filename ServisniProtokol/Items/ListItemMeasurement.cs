@@ -39,5 +39,10 @@ namespace ServisniProtokol.Items
         {
             return new(Parameter, Value, Unit, IsValid);
         }
+
+        private ListItemMeasurement()
+        {
+            
+        }
     }
 }

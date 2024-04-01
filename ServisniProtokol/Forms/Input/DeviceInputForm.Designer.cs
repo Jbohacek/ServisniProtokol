@@ -128,6 +128,7 @@
             Controls.Add(lVyrobce);
             Name = "DeviceInputForm";
             Text = "Zařízení";
+            Shown += DeviceInputForm_Shown;
             ((System.ComponentModel.ISupportInitialize)ErrorSetter).EndInit();
             ResumeLayout(false);
             PerformLayout();

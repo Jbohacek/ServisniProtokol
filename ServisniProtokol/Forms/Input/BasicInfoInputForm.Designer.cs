@@ -109,6 +109,7 @@
             Controls.Add(lCisloProduktu);
             Name = "BasicInfoInputForm";
             Text = "Základní informace";
+            Shown += BasicInfoInputForm_Shown;
             ((System.ComponentModel.ISupportInitialize)ErrorSetter).EndInit();
             ResumeLayout(false);
             PerformLayout();

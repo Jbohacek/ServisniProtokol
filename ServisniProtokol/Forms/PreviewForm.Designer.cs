@@ -28,12 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "PreviewForm";
+            pPaintBox = new PictureBox();
+            bBack = new Button();
+            ((System.ComponentModel.ISupportInitialize)pPaintBox).BeginInit();
+            SuspendLayout();
+            // 
+            // pPaintBox
+            // 
+            pPaintBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pPaintBox.Location = new Point(12, 33);
+            pPaintBox.Name = "pPaintBox";
+            pPaintBox.Size = new Size(743, 619);
+            pPaintBox.TabIndex = 0;
+            pPaintBox.TabStop = false;
+            pPaintBox.Paint += pPaintBox_Paint;
+            pPaintBox.Resize += pPaintBox_Resize;
+            // 
+            // bBack
+            // 
+            bBack.Location = new Point(12, 4);
+            bBack.Name = "bBack";
+            bBack.Size = new Size(75, 23);
+            bBack.TabIndex = 1;
+            bBack.Text = "Zpět";
+            bBack.UseVisualStyleBackColor = true;
+            bBack.Click += bBack_Click;
+            // 
+            // PreviewForm
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(767, 664);
+            Controls.Add(bBack);
+            Controls.Add(pPaintBox);
+            MinimumSize = new Size(600, 550);
+            Name = "PreviewForm";
+            Text = "PreviewForm";
+            ((System.ComponentModel.ISupportInitialize)pPaintBox).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
+
+        private PictureBox pPaintBox;
+        private Button bBack;
     }
 }
